@@ -66,6 +66,8 @@ func main() {
 			}
 		}
 
+		cachedVideos = append(cachedVideos, videoId)
+
 		return ctx.SendFile(fmt.Sprint("./cached/", videoId))
 	})
 
