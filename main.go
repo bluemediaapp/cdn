@@ -3,7 +3,7 @@ package main
 import (
 	"context"
 	"fmt"
-	"github.com/SkynetLabs/go-skynet"
+	"github.com/NebulousLabs/go-skynet/v2"
 	"github.com/bluemediaapp/models"
 	"github.com/gofiber/fiber/v2"
 	"go.mongodb.org/mongo-driver/bson"
@@ -24,15 +24,10 @@ var (
 	videosCollection *mongo.Collection
 
 	cachedVideos = make([]int64, 0, 0)
-
-	skyClient = skynet.New()
-
-
-
 )
 
 func main() {
-	max, err := strconv.ParseInt(os.Getenv("ma"), 10, 32)
+	max, err := strconv.ParseInt(os.Getenv("max_cached_videos"), 10, 32)
 	if err != nil {
 		max = 10
 	}
@@ -41,6 +36,7 @@ func main() {
 		mongoUri:        os.Getenv("mongo_uri"),
 		maxCachedVideos: int(max),
 	}
+	skyClient := skynet.New()
 
 	app.Get("/videos/:video_id", func(ctx *fiber.Ctx) error {
 		videoId, err := strconv.ParseInt(ctx.Params("video_id"), 10, 64)
