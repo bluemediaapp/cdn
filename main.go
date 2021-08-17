@@ -38,8 +38,8 @@ func main() {
 	}
 	skyClient := skynet.New()
 
-	app.Get("/videos/:video_id", func(ctx *fiber.Ctx) error {
-		videoId, err := strconv.ParseInt(ctx.Params("video_id"), 10, 64)
+	app.Post("/videos", func(ctx *fiber.Ctx) error {
+		videoId, err := strconv.ParseInt(ctx.Get("video_id"), 10, 64)
 		if err != nil {
 			return err
 		}
